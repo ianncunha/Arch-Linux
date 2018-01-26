@@ -32,30 +32,16 @@ $ gdisk /dev/sda
 type 'x', 'z', 'y' and 'y' in the program entry.
 
 #### Writing the partitions
+Creating boot, swap, root and home partitions
 ```sh
 $ cgdisk /dev/sda
 ```
 the program entries must be like:
 
-boot:	First sector: Leave blank
-		  Size sector:  1024M
-		  Hex code:     EF00
-		  Name:         boot
-
-swap:	First sector: Leave blanl
-		  Size sector:  16G (2x RAM)
-		  Hex code:     8200
-		  Name:         swap
-
-root:	First sector: Leave blank
-	  	Size sector:  53G
-	  	Hex code:     Leave blank
-	  	Name:         root
-
-home:	First sector: Leave blank
-  		Size sector:  Leave blank
-	  	Hex code:     Leave blank
-		  name:         home
+- boot:	First sector: Leave blank; Size sector: 1024M; Hex code: EF00; Name: boot
+- swap:	First sector: Leave blank; Size sector: 16G(2x RAM); Hex code: 8200; Name: swap
+- root:	First sector: Leave blank; Size sector: 53G; Hex code: Leave blank; Name: root
+- home:	First sector: Leave blank; Size sector: Leave blank; Hex code: Leave blank; name: home
 
 then, 'write', 'y' and 'exit'.
 
