@@ -87,11 +87,7 @@ $ arch-chroot /mnt
 
 #### 7.1 - Locale
 ```sh
-$ nano /etc/locale.gen
-```
-uncomment your lenguage (en_US.UTF-8).
-
-```sh
+$ nano /etc/locale.gen #uncomment your language (en_US.UTF-8)
 $ locale-gen
 ```
 
@@ -117,12 +113,7 @@ $ echo 'your_hostname' > /etc/hostname
 $ passwd
 $ useradd -m -g users -G wheel,storage,power -s /bin/bash 'your_user_name'
 $ passwd 'your_user_name'
-$ EDITOR=nano visudo
-```
-
-uncomment line:
-```sh
-%wheel ALL=(ALL) ALL
+$ EDITOR=nano visudo #uncomment line: %wheel ALL=(ALL) ALL
 ```
 
 #### 7.6 - Bootloader
@@ -132,6 +123,7 @@ $ bootctl install
 ```
 
 Write new files:
+
 arch.conf
 ```sh
 $ nano /boot/loader/entries/arch.conf
