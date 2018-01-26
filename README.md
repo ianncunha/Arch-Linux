@@ -36,12 +36,12 @@ Creating boot, swap, root and home partitions
 ```sh
 $ cgdisk /dev/sda
 ```
-the program entries must be like:
+the program entries must be like (First sector;Size sector, Hex code, Name):
 
-- boot:	First sector: Leave blank; Size sector: 1024M; Hex code: EF00; Name: boot
-- swap:	First sector: Leave blank; Size sector: 16G(2x RAM); Hex code: 8200; Name: swap
-- root:	First sector: Leave blank; Size sector: 53G; Hex code: Leave blank; Name: root
-- home:	First sector: Leave blank; Size sector: Leave blank; Hex code: Leave blank; name: home
+- boot:	Leave blank, 1024M, EF00, boot
+- swap:	Leave blank, 16G(2x RAM), 8200, swap
+- root:	Leave blank, 53G, Leave blank, root
+- home:	Leave blank, Leave blank, Leave blank, home
 
 then, 'write', 'y' and 'exit'.
 
@@ -62,3 +62,22 @@ $ mkdir /mnt/home
 $ mount /dev/sda1 /mnt/boot
 $ mount /dev/sda4 /mnt/home
 ```
+
+## Step 6 - Mirrorlist
+```sh
+$ cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
+$ sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist.backup
+$ rankmirrors -n 6 /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist
+```
+
+## Step 6 - Install Base
+```sh
+$ pacstrap /mnt base base-devel vim efibootmgr
+```
+
+## Step 7 - fstab
+```sh
+$ genfstab -U -p /mnt >> /mnt/etc/fstab
+```
+
+to be continued
