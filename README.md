@@ -80,4 +80,116 @@ $ pacstrap /mnt base base-devel vim efibootmgr
 $ genfstab -U -p /mnt >> /mnt/etc/fstab
 ```
 
-to be continued
+## Step 7 - chroot
+```sh
+$ arch-chroot /mnt
+```
+
+#### 7.1 - Locale
+```sh
+$ nano /etc/locale.gen
+```
+uncomment your lenguage (en_US.UTF-8).
+
+```sh
+$ locale-gen
+```
+
+#### 7.2 - Language
+```sh
+$ echo LANG=en_US.UTF-8 > /etc/locale.conf
+$ export LANG=en_US.UTF-8
+```
+
+#### 7.3 - TimeZone
+```sh
+$ ln -s /usr/share/zoneinfo/Brazil/East > /etc/localtime
+$ hwclock --systohc --utc
+```
+
+#### 7.4 - Hostname
+```sh
+$ echo 'your_hostname' > /etc/hostname
+```
+
+#### 7.5 - Root and user
+```sh
+$ passwd
+$ useradd -m -g users -G wheel,storage,power -s /bin/bash 'your_user_name'
+$ passwd 'your_user_name'
+$ EDITOR=nano visudo
+```
+
+uncomment line:
+```sh
+%wheel ALL=(ALL) ALL
+```
+
+#### 7.6 - Bootloader
+```sh
+$ mount -t efivarfs efivarfs /sys/firmware/efi/efivars
+$ bootctl install
+```
+
+Write new files:
+arch.conf
+```sh
+$ nano /boot/loader/entries/arch.conf
+```
+
+```sh
+title Arch Linux
+linux /vmlinuz-linux
+initrd /initramfs-linux.img
+options root=/dev/sda3 rw
+```
+loader.conf
+```sh
+$ nano /boot/loader/loader.conf
+```
+
+```sh
+timeout 3
+default arch
+```
+
+#### 7.7 - Multilib and AUR repository
+```sh
+nano /etc/pacman.conf
+```
+
+uncomment the multilib repo and add:
+```sh
+[archlinuxfr]
+SigLevel = Never
+Server = http://repo.archlinux.fr/$arch
+```
+
+#### 7.8 - Update
+```sh
+$ pacman -Suy
+```
+
+#### 7.9 - Install yaourt
+```sh
+$ pacman -S yaourt
+```
+
+#### 7.10 - Install bash complation
+```sh
+$ pacman -S bash-completion
+```
+
+#### 7.11 - Netctl
+```sh
+$ pacman -S wireless_tools wpa_supplicant wpa_actiond dialog
+$ systemctl enable netctl-auto@wlp2s0
+$ systemctl enable dhcpcd.service
+```
+
+## 8 - Umount and reboot
+```sh
+$ exit
+$ umount -R /mnt
+$ reboot
+```
