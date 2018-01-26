@@ -25,13 +25,13 @@ $ lsblk
 ```
 
 ## Step 3 - Partitioning
-#### Wiping the existing partitions
+#### 3.1 - Wiping the existing partitions
 ```sh
 $ gdisk /dev/sda
 ```
 type 'x', 'z', 'y' and 'y' in the program entry.
 
-#### Writing the partitions
+#### 3.2 - Writing the partitions
 Creating boot, swap, root and home partitions
 ```sh
 $ cgdisk /dev/sda
@@ -45,7 +45,7 @@ the program entries must be like (First sector;Size sector, Hex code, Name):
 
 then, 'write', 'y' and 'exit'.
 
-## Step 4- Formatting
+#### 3.3 - Formatting
 ```sh
 $ mkfs.fat -F32 /dev/sda1 (boot)
 $ mkswap /dev/sda2        (swap)
@@ -54,7 +54,7 @@ $ mkfs.ext4 /dev/sda3     (root)
 $ mkfs.ext4 /dev/sda4     (home)
 ```
 
-## Step 5 - Mounting
+#### 3.4 - Mounting
 ```sh
 $ mount /dev/sda3 /mnt
 $ mkdir /mnt/boot
@@ -63,19 +63,19 @@ $ mount /dev/sda1 /mnt/boot
 $ mount /dev/sda4 /mnt/home
 ```
 
-## Step 6 - Mirrorlist
+## Step 4 - Mirrorlist
 ```sh
 $ cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
 $ sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist.backup
 $ rankmirrors -n 6 /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist
 ```
 
-## Step 6 - Install Base
+## Step 5 - Install Base
 ```sh
 $ pacstrap /mnt base base-devel vim efibootmgr
 ```
 
-## Step 7 - fstab
+## Step 6 - fstab
 ```sh
 $ genfstab -U -p /mnt >> /mnt/etc/fstab
 ```
