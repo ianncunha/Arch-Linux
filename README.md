@@ -147,7 +147,7 @@ default arch
 
 #### 7.7 - Multilib and AUR repository
 ```sh
-nano /etc/pacman.conf
+$ nano /etc/pacman.conf
 ```
 
 uncomment the multilib repo and add:
@@ -179,9 +179,79 @@ $ systemctl enable netctl-auto@wlp2s0
 $ systemctl enable dhcpcd.service
 ```
 
-## 8 - Umount and reboot
+## Step 8 - Umount and reboot
 ```sh
 $ exit
 $ umount -R /mnt
 $ reboot
+```
+## Step 9 - Xorg
+
+#### 9.1 - Check Internet Connection
+As always
+```sh
+$ ping -c 3 www.google.com
+```
+
+#### 9.2 - Xorg
+```sh
+$ sudo pacman -S xorg-server xorg-server-utils xorg-xinit xorg-twm xorg-xclock xterm
+```
+
+#### 9.3 - Graphics driver
+```sh
+$ sudo pacman -S xf86-video-vesa 
+```
+
+## Step 10 - Interface and Desktop environment
+#### Gnome
+```sh
+$ sudo pacman -S gnome gnome-extra
+$ sudo pacman -S gdm
+$ sudo systemctl enable gdm.service
+$ sudo pacman -S gnome-tweak-tool
+$ yaourt -S gnome-software
+```
+
+#### Xfce
+```sh
+$ pacman -S xfce4 xfce4-goodies gamin
+```
+
+#### i3
+```sh
+$ sudo pacman -S i3 dmenu
+```
+
+## Step 11 - Start X at Login
+```sh
+$ cp /etc/X11/xinit/xinitrc ~/.xinitrc
+```
+
+Edit file:
+```sh
+$ nano ~/.xinitrc
+```
+replace this
+```sh
+twm &
+xclock -geometry 50x50-1+1 &
+xterm -geometry 80x50+494+51 &
+xterm -geometry 80x20+494-0 &
+exec xterm -geometry 80x66+0+0 -name login
+```
+
+to this
+```sh
+exec 'your_interface'
+```
+
+## Extra - Touchpad support
+```sh
+$ sudo pacman -S xf86-input-synaptics
+```
+
+## Step 12 - Reboot
+```sh
+$ sudo reboot
 ```
