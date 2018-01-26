@@ -5,7 +5,7 @@ My minimum and simple Arch instalation.
 from [here](https://www.archlinux.org/download/)
 
 ## Step 1 - Check Internet Connection
-####Wifi
+Wifi
 ```sh
 $ wifi-menu
 $ ping -c 3 www.google.com
