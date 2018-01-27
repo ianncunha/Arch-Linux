@@ -129,7 +129,7 @@ $ EDITOR=nano visudo #uncomment line: %wheel ALL=(ALL) ALL
 ```
 
 #### 7.6 - Bootloader
-#### UEFI
+#### EFI
 ```sh
 $ mount -t efivarfs efivarfs /sys/firmware/efi/efivars
 $ bootctl install
