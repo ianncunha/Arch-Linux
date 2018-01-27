@@ -207,8 +207,8 @@ $ pacman -S bash-completion
 #### 7.11 - Netctl
 ```sh
 $ pacman -S wireless_tools wpa_supplicant wpa_actiond dialog
-$ systemctl enable netctl-auto@wlp2s0 # not necessary
-$ systemctl enable dhcpcd.service # not necessary
+$ systemctl enable netctl-auto@wlp2s0 #not necessary
+$ systemctl enable dhcpcd.service #not necessary
 ```
 
 ## Step 8 - Umount and reboot
@@ -236,6 +236,11 @@ $ sudo pacman -S xf86-video-vesa
 ```
 
 ## Step 10 - Interface and Desktop environment
+
+This step depends on the taste of each one. I advise looking for your favorite interface flavor on the wiki [here](https://wiki.archlinux.org/index.php/desktop_environment).
+
+I will conitnue with some examples.
+
 #### Gnome
 ```sh
 $ sudo pacman -S gnome gnome-extra
@@ -275,7 +280,7 @@ exec xterm -geometry 80x66+0+0 -name login
 
 to this
 ```sh
-exec 'your_interface'
+exec your_interface #better find the real command name in the wiki
 ```
 
 ## Extra - Touchpad support
