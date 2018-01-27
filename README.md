@@ -1,10 +1,13 @@
 # Arch-Linux
 My minimum and simple Arch instalation using EFI and BIOS.
 
-Some changes may occur due to new releases. I suggest using the wiki along with this guide: [archwiki](https://wiki.archlinux.org/index.php/Installation_guide)
+Some changes may occur due to new releases. I suggest using the wiki along with this guide.
 
 ## Requirement - ArchLinux ISO
-[iso](https://www.archlinux.org/download/)
+From [here](https://www.archlinux.org/download/)
+
+## Extra Requirement - ArchLinux Wiki Instalation Guide
+From [here](https://wiki.archlinux.org/index.php/Installation_guide)
 
 ## Step 1 - Check Internet Connection
 #### Wifi
