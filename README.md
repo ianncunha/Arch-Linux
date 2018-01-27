@@ -88,8 +88,15 @@ $ nano /etc/pacman.d/mirrorlist
 ```
 
 ## Step 5 - Install Base
+
+#### EFI
 ```sh
-$ pacstrap /mnt base base-devel vim efibootmgr
+$ pacstrap /mnt base base-devel efibootmgr
+```
+
+#### BIOS
+```sh
+$ pacstrap /mnt base base-devel
 ```
 
 ## Step 6 - fstab
@@ -120,16 +127,16 @@ $ ln -s /usr/share/zoneinfo/Brazil/East > /etc/localtime
 $ hwclock --systohc --utc
 ```
 
-#### 7.4 - Hostname
+#### 7.4 - Hostname (root)
 ```sh
-$ echo 'your_hostname' > /etc/hostname
+$ echo your_hostname > /etc/hostname
+passwd
 ```
 
-#### 7.5 - Root and user
+#### 7.5 - Add user
 ```sh
-$ passwd
-$ useradd -m -g users -G wheel,storage,power -s /bin/bash 'your_user_name'
-$ passwd 'your_user_name'
+$ useradd -m -g users -G wheel,storage,power -s /bin/bash your_user_name
+$ passwd your_user_name
 $ EDITOR=nano visudo #uncomment line: %wheel ALL=(ALL) ALL
 ```
 
