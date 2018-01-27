@@ -1,5 +1,5 @@
 # Arch-Linux
-My minimum and simple Arch instalation using EFI.
+My minimum and simple Arch instalation using EFI and BIOS.
 
 ## Requirement - ArchLinux ISO
 From [here](https://www.archlinux.org/download/)
@@ -17,7 +17,7 @@ $ sudo ip link set interface up
 $ sudo systemctl enable dhcpcd@interface.service
 $ ping -c 3 google.com
 ```
-## Step 2 - Verifications
+## Step 2 - Verification of EFI
 Checking the efi files and yours partitions that already exist
 ```sh
 $ efivar -l
@@ -38,21 +38,28 @@ $ cgdisk /dev/sda
 ```
 the program entries must be like (First sector;Size sector, Hex code, Name):
 
-- boot:	Leave blank, 1024M, EF00, boot
 - swap:	Leave blank, 16G(2x RAM), 8200, swap
 - root:	Leave blank, 53G, Leave blank, root
 - home:	Leave blank, Leave blank, Leave blank, home
+
+#### EFI
+- boot:	Leave blank, 1G, EF00, boot
+
+#### BIOS
+- boot:	Leave blank, 1G, EF02, boot
 
 then, 'write', 'y' and 'exit'.
 
 #### 3.3 - Formatting
 ```sh
-$ mkfs.fat -F32 /dev/sda1 (boot)
+$ mkfs.ext4 /dev/sda1     (boot)
 $ mkswap /dev/sda2        (swap)
 $ swapon /dev/sda2        (swap)
 $ mkfs.ext4 /dev/sda3     (root)
 $ mkfs.ext4 /dev/sda4     (home)
 ```
+
+obs.: You can make, for UFI, mkfs.fat -F32 /dev/sda1.
 
 #### 3.4 - Mounting
 ```sh
@@ -68,6 +75,11 @@ $ mount /dev/sda4 /mnt/home
 $ cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
 $ sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist.backup
 $ rankmirrors -n 6 /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist
+```
+
+or just uncomment your mirrors with 
+```sh
+$ nano /etc/pacman.d/mirrorlist
 ```
 
 ## Step 5 - Install Base
@@ -117,6 +129,7 @@ $ EDITOR=nano visudo #uncomment line: %wheel ALL=(ALL) ALL
 ```
 
 #### 7.6 - Bootloader
+#### UEFI
 ```sh
 $ mount -t efivarfs efivarfs /sys/firmware/efi/efivars
 $ bootctl install
@@ -143,6 +156,13 @@ $ nano /boot/loader/loader.conf
 ```sh
 timeout 3
 default arch
+```
+
+#### BIOS
+```sh
+$ pacman -S grub
+$ grub-install --recheck /dev/sda
+$ grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
 #### 7.7 - Multilib and AUR repository
@@ -175,8 +195,8 @@ $ pacman -S bash-completion
 #### 7.11 - Netctl
 ```sh
 $ pacman -S wireless_tools wpa_supplicant wpa_actiond dialog
-$ systemctl enable netctl-auto@wlp2s0
-$ systemctl enable dhcpcd.service
+$ systemctl enable netctl-auto@wlp2s0 # not necessary
+$ systemctl enable dhcpcd.service # not necessary
 ```
 
 ## Step 8 - Umount and reboot
