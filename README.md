@@ -43,28 +43,36 @@ $ cgdisk /dev/sda
 ```
 the program entries must be like (First sector;Size sector, Hex code, Name):
 
-- swap:	Leave blank, 16G(2x RAM), 8200, swap
-- root:	Leave blank, 53G, Leave blank, root
-- home:	Leave blank, Leave blank, Leave blank, home
-
 #### EFI
 - boot:	Leave blank, 1G, EF00, boot
 
 #### BIOS
 - boot:	Leave blank, 1G, EF02, boot
 
+#### For both
+- swap:	Leave blank, 16G(2x RAM), 8200, swap
+- root:	Leave blank, 53G, Leave blank, root
+- home:	Leave blank, Leave blank, Leave blank, home
+
 then, 'write', 'y' and 'exit'.
 
 #### 3.3 - Formatting
 ```sh
-$ mkfs.ext4 /dev/sda1     (boot)
 $ mkswap /dev/sda2        (swap)
 $ swapon /dev/sda2        (swap)
 $ mkfs.ext4 /dev/sda3     (root)
 $ mkfs.ext4 /dev/sda4     (home)
 ```
 
-obs.: You can make, for UFI, mkfs.fat -F32 /dev/sda1.
+#### EFI
+```sh
+$ mkfs.fat -F32 /dev/sda1     (boot)
+```
+
+### BIOS
+```sh
+$ mkfs.ext4 /dev/sda1     (boot)
+```
 
 #### 3.4 - Mounting
 ```sh
