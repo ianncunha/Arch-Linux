@@ -69,7 +69,7 @@ $ mkfs.ext4 /dev/sda4     (home)
 $ mkfs.fat -F32 /dev/sda1     (boot)
 ```
 
-### BIOS
+#### BIOS
 ```sh
 $ mkfs.ext4 /dev/sda1     (boot)
 ```
